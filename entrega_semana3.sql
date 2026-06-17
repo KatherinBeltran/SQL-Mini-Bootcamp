@@ -51,7 +51,7 @@ CREATE TABLE libros (
 CREATE TABLE libros_autores (
     libro_id INT NOT NULL,
     autor_id INT NOT NULL,
-    orden    INT DEFAULT 1,   -- 1 = autor principal, 2 = coautor, etc.
+    orden    INT DEFAULT 1,
 
     PRIMARY KEY (libro_id, autor_id),
 
@@ -115,36 +115,35 @@ INSERT INTO categorias (nombre, descripcion) VALUES
 -- 3.2 autores
 
 INSERT INTO autores (nombre, pais, fecha_nacimiento) VALUES
-    ('Gabriel García Márquez', 'Colombia',       '1927-03-06'),   -- 1
-    ('Isabel Allende',         'Chile',          '1942-08-02'),   -- 2
-    ('Stephen Hawking',        'Reino Unido',    '1942-01-08'),   -- 3
-    ('J.K. Rowling',           'Reino Unido',    '1965-07-31'),   -- 4
-    ('Yuval Noah Harari',      'Israel',         '1976-02-24'),   -- 5
-    ('Roald Dahl',             'Reino Unido',    '1916-09-13'),   -- 6
-    ('Andrew S. Tanenbaum',    'Estados Unidos', '1944-03-16'),   -- 7
-    ('Ian Goodfellow',         'Estados Unidos', '1985-01-01'),   -- 8
-    ('Yoshua Bengio',          'Canadá',         '1964-03-05'),   -- 9
-    ('Eric Matthes',           'Estados Unidos', '1970-01-01'),   -- 10
-    ('Joshua Bloch',           'Estados Unidos', '1961-08-28');   -- 11
+    ('Gabriel García Márquez', 'Colombia',       '1927-03-06'), 
+    ('Isabel Allende',         'Chile',          '1942-08-02'), 
+    ('Stephen Hawking',        'Reino Unido',    '1942-01-08'),  
+    ('J.K. Rowling',           'Reino Unido',    '1965-07-31'),  
+    ('Yuval Noah Harari',      'Israel',         '1976-02-24'),  
+    ('Roald Dahl',             'Reino Unido',    '1916-09-13'),  
+    ('Andrew S. Tanenbaum',    'Estados Unidos', '1944-03-16'),  
+    ('Ian Goodfellow',         'Estados Unidos', '1985-01-01'),  
+    ('Yoshua Bengio',          'Canadá',         '1964-03-05'), 
+    ('Eric Matthes',           'Estados Unidos', '1970-01-01'),  
+    ('Joshua Bloch',           'Estados Unidos', '1961-08-28');   
 
 -- 3.3 libros
 
 INSERT INTO libros (isbn, titulo, categoria_id, año_publicacion, precio, stock) VALUES
-    -- Ficción (cat 1)
     ('978-0307474728', 'Cien años de soledad',                1, 1967, 18.99, 5),
     ('978-0142437247', 'La casa de los espíritus',            1, 1982, 16.50, 3),
     ('978-0439708180', 'Harry Potter y la Piedra Filosofal',  1, 1997, 22.99, 8),
-    -- Ciencia (cat 2)
+
     ('978-0553380163', 'Breve historia del tiempo',           2, 1988, 15.99, 4),
     ('978-0062316097', 'Sapiens: De animales a dioses',       2, 2011, 24.99, 6),
     ('978-0062464310', 'Homo Deus',                           2, 2015, 26.50, 4),
-    -- Historia (cat 3)
+
     ('978-0062315007', '21 lecciones para el siglo XXI',      3, 2018, 20.99, 5),
-    -- Infantil (cat 4)
+ 
     ('978-0142410318', 'Matilda',                             4, 1988, 12.99, 10),
     ('978-0142410387', 'Charlie y la fábrica de chocolate',   4, 1964, 14.50, 7),
     ('978-0141365534', 'El gigante bonachón',                 4, 1982, 13.99, 6),
-    -- Tecnología (cat 5)
+
     ('978-0132126953', 'Sistemas Operativos Modernos',        5, 2007, 89.99, 3),
     ('978-0262035613', 'Deep Learning',                       5, 2016, 75.00, 2),
     ('978-0135957059', 'Redes de Computadoras',               5, 2010, 95.50, 2),
@@ -154,48 +153,48 @@ INSERT INTO libros (isbn, titulo, categoria_id, año_publicacion, precio, stock)
 -- 3.4 libros_autores  (junction N:M — primero libros y autores)
 
 INSERT INTO libros_autores (libro_id, autor_id, orden) VALUES
-    (1,  1, 1),   -- Cien años → García Márquez
-    (2,  2, 1),   -- La casa → Allende
-    (3,  4, 1),   -- Harry Potter → Rowling
-    (4,  3, 1),   -- Breve historia → Hawking
-    (5,  5, 1),   -- Sapiens → Harari
-    (6,  5, 1),   -- Homo Deus → Harari
-    (7,  5, 1),   -- 21 lecciones → Harari
-    (8,  6, 1),   -- Matilda → Dahl
-    (9,  6, 1),   -- Charlie → Dahl
-    (10, 6, 1),   -- El gigante → Dahl
-    (11, 7, 1),   -- Sistemas Operativos → Tanenbaum
-    (12, 8, 1),   -- Deep Learning → Goodfellow (autor principal)
-    (12, 9, 2),   -- Deep Learning → Bengio (coautor) ← 1 libro, 2 autores
-    (13, 7, 1),   -- Redes → Tanenbaum
-    (14,10, 1),   -- Python Crash Course → Matthes
-    (15,11, 1);   -- Effective Java → Bloch
+    (1,  1, 1),   
+    (2,  2, 1),   
+    (3,  4, 1),   
+    (4,  3, 1),   
+    (5,  5, 1),   
+    (6,  5, 1),   
+    (7,  5, 1),   
+    (8,  6, 1),   
+    (9,  6, 1),  
+    (10, 6, 1),   
+    (11, 7, 1),  
+    (12, 8, 1),   
+    (12, 9, 2),  
+    (13, 7, 1),   
+    (14,10, 1),   
+    (15,11, 1);  
 
 -- 3.5 usuarios
 
 INSERT INTO usuarios (email, nombre, telefono, tipo_membresia) VALUES
-    ('ana.garcia@email.com',      'Ana García',      '555-0001', 'premium'),   -- 1
-    ('carlos.lopez@email.com',    'Carlos López',    '555-0002', 'básica'),    -- 2
-    ('maria.torres@email.com',    'María Torres',    '555-0003', 'vip'),       -- 3
-    ('juan.perez@email.com',      'Juan Pérez',       NULL,      'básica'),    -- 4
-    ('lucia.martinez@email.com',  'Lucía Martínez',  '555-0005', 'premium'),   -- 5
-    ('sofia.rodriguez@email.com', 'Sofía Rodríguez', '555-0006', 'básica'),    -- 6
-    ('diego.fernandez@email.com', 'Diego Fernández',  NULL,      'básica');    -- 7
+    ('ana.garcia@email.com',      'Ana García',      '555-0001', 'premium'),  
+    ('carlos.lopez@email.com',    'Carlos López',    '555-0002', 'básica'),    
+    ('maria.torres@email.com',    'María Torres',    '555-0003', 'vip'),       
+    ('juan.perez@email.com',      'Juan Pérez',       NULL,      'básica'),    
+    ('lucia.martinez@email.com',  'Lucía Martínez',  '555-0005', 'premium'),   
+    ('sofia.rodriguez@email.com', 'Sofía Rodríguez', '555-0006', 'básica'),    
+    ('diego.fernandez@email.com', 'Diego Fernández',  NULL,      'básica');    
 
 INSERT INTO prestamos
     (usuario_id, libro_id, fecha_prestamo, fecha_devolucion_esperada, fecha_devolucion_real, multa)
 VALUES
-    (1, 1, '2024-01-01', '2024-01-15', '2024-01-14',  0.00),   -- Ana, devolvió a tiempo
-    (2, 3, '2024-01-05', '2024-01-19', '2024-01-25', 15.00),   -- Carlos, 6 días tarde × 2.50
-    (3, 5, '2024-01-08', '2024-01-22', '2024-01-20',  0.00),   -- María, devolvió antes
-    (1, 8, '2024-01-10', '2024-01-24', '2024-01-23',  0.00),   -- Ana, a tiempo
-    (4, 9, '2024-01-12', '2024-01-26', '2024-02-05', 25.00),   -- Juan, 10 días tarde × 2.50
+    (1, 1, '2024-01-01', '2024-01-15', '2024-01-14',  0.00),   
+    (2, 3, '2024-01-05', '2024-01-19', '2024-01-25', 15.00),  
+    (3, 5, '2024-01-08', '2024-01-22', '2024-01-20',  0.00), 
+    (1, 8, '2024-01-10', '2024-01-24', '2024-01-23',  0.00),   
+    (4, 9, '2024-01-12', '2024-01-26', '2024-02-05', 25.00),  
 
-    (1,  4, DATE_SUB(CURDATE(), INTERVAL 20 DAY), DATE_SUB(CURDATE(), INTERVAL  6 DAY), NULL, 0.00),  -- Ana, 6 días vencida
-    (5,  5, DATE_SUB(CURDATE(), INTERVAL 12 DAY), DATE_ADD(CURDATE(), INTERVAL  2 DAY), NULL, 0.00),  -- Lucía, en plazo
-    (6, 10, DATE_SUB(CURDATE(), INTERVAL  9 DAY), DATE_ADD(CURDATE(), INTERVAL  5 DAY), NULL, 0.00),  -- Sofía, en plazo
-    (7, 14, DATE_SUB(CURDATE(), INTERVAL  6 DAY), DATE_ADD(CURDATE(), INTERVAL  8 DAY), NULL, 0.00),  -- Diego, en plazo
-    (2, 11, DATE_SUB(CURDATE(), INTERVAL  4 DAY), DATE_ADD(CURDATE(), INTERVAL 10 DAY), NULL, 0.00);  -- Carlos, en plazo
+    (1,  4, DATE_SUB(CURDATE(), INTERVAL 20 DAY), DATE_SUB(CURDATE(), INTERVAL  6 DAY), NULL, 0.00),  
+    (5,  5, DATE_SUB(CURDATE(), INTERVAL 12 DAY), DATE_ADD(CURDATE(), INTERVAL  2 DAY), NULL, 0.00),  
+    (6, 10, DATE_SUB(CURDATE(), INTERVAL  9 DAY), DATE_ADD(CURDATE(), INTERVAL  5 DAY), NULL, 0.00), 
+    (7, 14, DATE_SUB(CURDATE(), INTERVAL  6 DAY), DATE_ADD(CURDATE(), INTERVAL  8 DAY), NULL, 0.00), 
+    (2, 11, DATE_SUB(CURDATE(), INTERVAL  4 DAY), DATE_ADD(CURDATE(), INTERVAL 10 DAY), NULL, 0.00);  
 
 SELECT
     (SELECT COUNT(*) FROM categorias)    AS categorias,
@@ -294,7 +293,6 @@ SET @dias_retraso = (
     FROM prestamos WHERE id = 6
 );
 SET @multa = GREATEST(0, @dias_retraso * 2.50);
--- GREATEST(0, X): si se devolvió antes, la multa queda en 0 (nunca negativa)
 
 -- 2. Marcar como devuelto y aplicar multa
 UPDATE prestamos
@@ -318,13 +316,10 @@ COMMIT;
 
 START TRANSACTION;
 
--- Antes: libro 7 apunta a categoría 3
 SELECT id, titulo, categoria_id FROM libros WHERE id = 7;
 
--- Eliminar la categoría
 DELETE FROM categorias WHERE id = 3;
 
--- Después: libro 7 sigue existiendo pero con categoria_id = NULL
 SELECT id, titulo, categoria_id FROM libros WHERE id = 7;
 
 ROLLBACK;  
@@ -335,15 +330,15 @@ DELETE FROM usuarios WHERE id = 1;
 
 START TRANSACTION;
 
-SET SQL_SAFE_UPDATES = 0;           -- usuario_id no es PK/UNIQUE → Safe Updates lo bloquearía (Error 1175)
+SET SQL_SAFE_UPDATES = 0;           
 DELETE FROM prestamos WHERE usuario_id = 1;
-SET SQL_SAFE_UPDATES = 1;           -- reactivar inmediatamente
+SET SQL_SAFE_UPDATES = 1;           
 
-DELETE FROM usuarios WHERE id = 1;  -- ahora sí funciona (no tiene hijos)
+DELETE FROM usuarios WHERE id = 1;  
 
-ROLLBACK;  -- Deshacer todo: Ana y sus préstamos vuelven intactos
+ROLLBACK;
 
-SELECT nombre FROM usuarios WHERE id = 1;   -- Ana sigue ahí ✅
+SELECT nombre FROM usuarios WHERE id = 1;   
 
 -- 6.3 CHECK — rechazar valores inválidos
 
@@ -356,7 +351,7 @@ INSERT INTO libros (isbn, titulo, año_publicacion, precio)
 VALUES ('978-0000000002', 'Libro gratis', 2020, -10.00);
 
 -- Confirmar que siguen siendo exactamente 15 libros (ninguno entró)
-SELECT COUNT(*) AS total_libros FROM libros;   -- debe devolver 15
+SELECT COUNT(*) AS total_libros FROM libros;   
 
 -- BONUS OPCIONAL: tabla resenias
 
@@ -371,7 +366,7 @@ CREATE TABLE resenias (
     CONSTRAINT chk_calificacion CHECK (calificacion BETWEEN 1 AND 5),
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
     FOREIGN KEY (libro_id)   REFERENCES libros(id)   ON DELETE CASCADE,
-    UNIQUE (usuario_id, libro_id)   -- un usuario reseña un libro solo una vez
+    UNIQUE (usuario_id, libro_id)  
 );
 
 INSERT INTO resenias (usuario_id, libro_id, calificacion, comentario) VALUES
@@ -403,6 +398,5 @@ BEGIN
 END$$
 DELIMITER ;
 
--- Probar el trigger: cambiar el precio de "Deep Learning"
 UPDATE libros SET precio = 69.99 WHERE id = 12;
 SELECT * FROM auditoria_precios;
